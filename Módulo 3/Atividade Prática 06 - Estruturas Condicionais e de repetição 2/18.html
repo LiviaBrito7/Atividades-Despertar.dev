@@ -1,0 +1,21 @@
+<!-- Uma loja de eletrodomésticos estabeleceu as seguintes
+modalidades de pagamento para a venda de suas mercadorias:
+
+Escreva um algoritmo que armazene o preço de tabela e o número
+de vezes em que o pagamento será feito. Calcule o valor de cada
+parcela e o preço total da compra e imprima no console. -->
+
+<script>
+    let preco = Number(prompt('Digite o valor do produto'))
+    let parcelas = Number(prompt('Digite o numero de parcelas'))
+
+    if (parcelas === 1) {
+        preco -= preco * 0.025
+    } else if (parcelas >= 6 && parcelas <=10) {
+        preco += preco * 0.06
+    } else if (parcelas >= 11 && parcelas <=15) {
+        preco += preco * 0.13
+    }
+    let valorParcelas = preco / parcelas 
+    document.write(`Número de Parcelas: ${parcelas} <br> Preço a ser pago: ${preco.toFixed(2)}<br> Preço de cada parcela: ${valorParcelas.toFixed(2)}`)
+</script>

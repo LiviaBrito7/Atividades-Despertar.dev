@@ -1,0 +1,14 @@
+<!-- Crie uma função que recebe por parâmetro o tempo de duração de
+uma fábrica expressa em segundos e retorna esse tempo em horas,
+minutos e segundos. -->
+
+<script>
+function timeConverter(sec) {
+    const hours = (sec / 3600)
+    sec %= 3600
+    const minutes = (sec % 3600) / 60
+    sec %= 60
+    return `${Math.floor(hours)}:${Math.floor(minutes)}:${Math.floor(sec)}`
+}
+console.log(timeConverter(12000));
+</script>

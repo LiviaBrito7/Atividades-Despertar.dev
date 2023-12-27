@@ -1,0 +1,209 @@
+<script>
+
+let produtos = []
+
+
+// MENU
+let continuar = true;
+while (continuar) {
+    const opcao = prompt(
+        'Escolha uma opção:\n' +
+        '1 - Listar Produtos.\n' +
+        '2 - Adicionar Produto.\n' +
+        '3 - Editar Produto.\n' +
+        '4 - Remover Produto.\n' +
+        '5 - Somar estoques. \n' +
+        '6 - Fazer pedidos. \n' +
+        '7 - Relatório\n' +
+        '8 - Sair' 
+    );
+
+    switch (opcao) {
+        case '1':
+            listarProdutos();
+            break;
+        case '2':
+            listarProdutos();
+            break;
+        case '3':
+            editarProduto();
+            break;
+        case '4':
+            removerProduto();
+            break;
+        case '5':
+            somarEstoque();
+            break;
+        case '6':
+            fazerPedidos();
+            break;
+        case '7': 
+            relatorioDeVendas()
+        case '8':
+            continuar = false;
+            alert('Saindo do programa.');
+            break;
+        default:
+            alert('Opção inválida. Tente novamente.');
+    }
+}
+
+// Listar Todos os Produtos Disponíveis: O sistema deve ser capaz de exibir uma lista de todos os produtos disponíveis na padaria. João vai poder escolher no momento entre listagem simplificada, por ordem de preço, ou por ordem alfabética.
+
+function listarProdutos() {
+    produtos.forEach(produto => {
+        alert(`ID: ${produto.id} | Nome: ${produto.nome} | Preço: ${produto.estoque} | Estoque: ${produto.estoque}`)
+    })
+}
+
+// Adicionar um Novo Produto ao Catálogo: O sistema deve permitir que o usuário adicione um novo produto ao catálogo. O produto deve ser adicionado com um nome, preço e estoque.
+
+function adicionarProduto() {
+    let nomeProduto = prompt('Digite o nome do produto')
+    let precoProduto = parseFloat(prompt('Digite o preço do produto'))
+    let estoqueProduto = parseFloat(prompt('Digite o estoque do produto'))
+
+    let novoProduto = {
+        id: produtos.length + 1,
+        nome: nomeProduto,
+        preco: precoProduto,
+        estoque: estoqueProduto
+    }
+
+    produtos.push(novoProduto)
+}
+
+adicionarProduto()
+console.log(produtos)
+
+
+// Editar Produto do Catálogo: O sistema deve permitir que o usuário edite as informações de um produto existente no catálogo. Lembre-se que o estoque nunca pode ser menor que 0.
+
+function editarProduto() {
+    const identificadorProduto = Number(prompt("Digite o ID do produto que deseja editar:"))
+    const produto = produtos.find(produto => produto.id === identificadorProduto)
+
+    if (!produto) {
+        alert("Produto não encontrado. O usuário deve voltar para o menu inicial depois.")
+    } else {
+        const estoque = prompt("Insira o estoque do produto:")
+        const preco = prompt("Insira o preco do produto:")
+
+        produto.estoque = estoque
+        produto.preco = preco
+
+        alert("Produto editado com sucesso!")
+    }
+}
+
+// Remover um Produto do Catálogo: O sistema deve permitir que o usuário remova um produto do catálogo.
+
+
+function removerProduto(produto) {
+    const identificadorProduto = Number(prompt("Digite o ID do produto que deseja remover:"))
+    const produtoProcurar = produtos.find(produto => produto.id === identificadorProduto)
+
+    if (!produto) {
+        alert("Produto não encontrado. O usuário deve voltar para o menu inicial depois.")
+    } else {
+        produtos.splice(produto, 1)
+        alert("Produto removido com sucesso!")
+    }
+}
+
+
+// Receber Pedidos dos Clientes: O sistema deve permitir que os clientes façam pedidos. Um pedido deve conter um ou mais produtos e a quantidade desejada de cada um. O sistema deve armazenar um histórico de pedidos. 
+
+
+let pedidos = []
+
+
+function exibirMenu() {
+    let menu = `Esses são os produtos disponiveis,`;
+
+    produtos.forEach((produto, index) => {
+        menu += `${index + 1} - ${produto.nome}\n`;
+    });
+
+    menu += 'Escolha o número correspondente ao produto desejado ou 6 para sair:';
+
+    const escolha = Number(prompt(menu));
+    return escolha - 1
+}
+
+function fazerPedidos(){
+    let continuarPedido = true;
+
+    while (continuarPedido) {
+        const escolha = exibirMenu();
+        const data = prompt('Insira a data do ');
+        if (escolha === -1) {
+            continuarPedido = false;
+        } else {
+            const produtoSelecionado = produtos[escolha];
+            alert(`Produto escolhido:\n Nome: ${produtoSelecionado.nome}\n Estoque: ${produtoSelecionado.estoque}\n Preço: R$${produtoSelecionado.preco.toFixed(2)}`);
+        }
+    }
+
+    
+    const produto = produtos.find(produto => produto.id == escolha)
+
+    if (!produto) {
+        alert("Produto não encontrado. O usuário deve voltar para o menu inicial depois.")
+    } else {
+        pedidos.push(produto)
+        pedidos.push(data)
+        alert("Pedido feito com sucesso!")
+    }
+}
+
+
+
+// Somar o valor do estoque: João deve poder somar o preço de venda do seu estoque
+
+function somarEstoque(produto) {
+    const somaEstoque = produtos.reduce((acc, produto) =>{
+        return acc + produto.preco * produto.estoque
+    }, 0)
+    alert(`O valor total do estoque é de R$${somaEstoque.toFixed(2)}`)
+}
+
+
+// Relatório Diarios: João deve poder fazer um relatório das vendas que aconteceram em um período específico que ele selecionar. Deve conter quantas vendas foram realizadas e qual o faturamento.
+ 
+function converterData(dataString) {
+    const partesData = dataString.split('-');
+    const dia = parseInt(partesData[0], 10);
+    const mes = parseInt(partesData[1], 10) - 1; // Mês começa do zero (janeiro = 0)
+    const ano = 2000 + parseInt(partesData[2], 10); // Assumindo anos no formato de 2 dígitos
+
+    return new Date(ano, mes, dia);
+}
+
+
+function relatorioDeVendas(dataInicial, dataFinal) {
+    let vendasNoPeriodo = 0;
+    let faturamentoNoPeriodo = 0;
+
+    for (let i = 0; i < pedidos.length; i += 2) {
+        const produto = pedidos[i];
+        const dataPedido = converterData(pedidos[i + 1]);
+
+        if (dataPedido >= converterData(dataInicial) && dataPedido <= converterData(dataFinal)) {
+            vendasNoPeriodo++;
+            faturamentoNoPeriodo += produto.preco;
+        }
+    }
+
+    return { vendas: vendasNoPeriodo, faturamento: faturamentoNoPeriodo };
+
+    const periodoInicial = prompt('Insira a data inicial (formato dd-mm-yy):');
+const periodoFinal = prompt('Insira a data final (formato dd-mm-yy):');
+
+const resultadoRelatorio = relatorioDeVendas(periodoInicial, periodoFinal);
+alert(`No período de ${periodoInicial} a ${periodoFinal}:`
+`Vendas realizadas: ${resultadoRelatorio.vendas}`
+`Faturamento total: R$${resultadoRelatorio.faturamento.toFixed(2)}`)
+}
+
+</script>

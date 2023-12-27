@@ -1,0 +1,179 @@
+<script>
+//     Deve ser desenvolvido um programa que realize um CRUD de veiculos.
+// Os inputs devem ser feitos através do PROMPT do HTML. O
+// funcionamento deve ser o seguinte:
+// Ao abrir a página, o sistema deve apresentar a seguinte tela:
+
+// Bem-vindo ao sistema de CRUD de veículos:
+
+// No momento, o sistema tem X veiculos cadastrados
+
+let identificador = 1
+
+let veiculos = [
+    {
+        id: 1,
+        marca: 'Ford',
+        modelo: 'Focus',
+        ano: 2020,
+        cor: 'Azul',
+        preco: '40.000'
+    }]
+
+let continuar = true
+
+
+function quantidadeCadastrados(veiculos) {
+    return veiculos.length
+}
+do {
+    const interacao = Number(prompt(`Bem-vindo ao sistema de CRUD de veículos:
+No momento, o sistema tem ${quantidadeCadastrados(veiculos)} veiculos cadastrados.
+Escolha uma das opções para interagir com o sistema:
+1 - Cadastrar veículo
+2 - Listar veículos
+3 - Filtrar veículos por marca
+4 - Atualizar veículo
+5 - Excluir veículo
+6 - Sair do sistema`))
+
+if(interacao == 1){
+    cadastrarVeiculo()
+} else if(interacao == 2){
+    listarVeiculos()
+} else if(interacao == 3){
+    filtrarVeiculos()
+} else if(interacao == 4){
+    atualizarVeiculo()
+} else if(interacao == 5){
+    removerVeiculo()
+} else if(interacao == 6){
+    sairSistema()
+} else {
+    console.log('Opção inválida!')
+}
+
+continuar = confirm("Continuar a interação?")
+
+
+} while (continuar)
+
+
+// 1 - Cadastrar veículo
+// -> Ao entrar nesta opção o sistema deve pedir os seguintes
+// dados: modelo, marca, ano, cor e preco.
+// -> O veículo deve ser adicionado na lista de veículos que
+// armazena todos os veículos cadastrados
+// -> Todo veículo deve ter um identificador único. Este
+// identificador deve ser gerado de forma automática
+    
+
+function cadastrarVeiculo() {
+    const modelo = prompt("Digite o modelo do veículo:")
+    const marca = prompt("Digite a marca do veículo:")
+    const ano = prompt("Digite o ano do veículo:")
+    const cor = prompt("Digite a cor do veículo:")
+    const preco = prompt("Digite o preço do veículo:")
+
+    identificador++
+
+    const novoVeiculo = {
+        id: identificador, modelo, marca, ano, cor, preco
+    }
+
+    veiculos.push(novoVeiculo)
+    alert("Veículo cadastrado com sucesso!")
+}
+
+// 2 - Listar todos os veículos
+// -> Ao entrar nesta opção o sistema deve listar os veículos
+// com o seguinte layout:
+// ID: 1 | Modelo: Civic| Marca: Honda | Ano: 2014/2015 | Cor: Azul |
+// Preço: R$40.000
+// ID: 1 | Modelo: Civic| Marca: Honda | Ano: 2014/2015 | Cor: Azul |
+// Preço: R$40.000
+
+function listarVeiculos() {
+    veiculos.forEach(veiculo => {
+        alert(`ID: ${veiculo.id} | Modelo: ${veiculo.modelo} | Marca: ${veiculo.marca} | Ano: ${veiculo.ano} | Cor: ${veiculo.cor} | Preço: ${veiculo.preco}`)
+    })
+}
+
+// 3 - Filtrar veículos por marca usando o filter
+// -> Ao entrar nesta opção o sistepma deve pedir para o
+// usuário digitar a marca que quer filtrar
+// -> Deve ser listado os veículos que forem da mesma marca
+// -> A lista deve ter o seguinte layout:
+// ID: 1 | Modelo: Civic| Cor: Azul | Preço: R$40.000
+// ID: 1 | Modelo: Civic| Cor: Azul | Preço: R$40.000
+
+function filtrarVeiculos() {
+    const marcaFiltrar = prompt("Digite a marca para filtrar:");
+    const marcaMinuscula = marcaFiltrar.toLowerCase();
+    const veiculosFiltrados = veiculos.filter(veiculo => veiculo.marca.toLowerCase() === marcaMinuscula);
+    if (veiculosFiltrados.length === 0) {
+        alert(`Não foram encontrados veículos da marca ${marcaFiltrar}.`);
+    } else {
+        alert(`Veículos da marca ${marcaFiltrar}:`);
+        veiculosFiltrados.forEach(veiculo => {
+            alert(`ID: ${veiculo.id} | Modelo: ${veiculo.modelo} | Cor: ${veiculo.cor} | Preço: R$${veiculo.preco}`);
+        });
+    }
+}
+
+// 4 - Atualizar veículo
+// -> Ao entrar nesta opção o sistema deve pedir para o
+// usuário digitar o IDENTIFICADOR do veículo
+// -> O Sistema deve verificar se o veículo existe ou não e
+// mostrar a seguinte mensagem caso o veículo não exista:
+// "Veículo, não encontrado. O usuário deve voltar para o menu
+// inicial depois"
+// -> Se o veículo existir, o sistema deve permitir que o usuário
+// atualize somente a cor e o preço.
+
+function atualizarVeiculo() {
+    const identificadorVeiculo = Number(prompt("Digite o ID do veículo que deseja atualizar:"))
+    const veiculo = veiculos.find(veiculo => veiculo.id === identificadorVeiculo)
+
+    if (!veiculo) {
+        alert("Veículo não encontrado. O usuário deve voltar para o menu inicial depois.")
+    } else {
+        const cor = prompt("Digite a cor do veículo:")
+        const preco = prompt("Digite o preço do veículo:")
+
+        veiculo.cor = cor
+        veiculo.preco = preco
+
+        alert("Veículo atualizado com sucesso!")
+    }
+}
+
+// 5 - Remover veículo
+// -> Ao entrar nesta opção o sistema deve pedir para o
+// usuário digitar o IDENTIFICADOR do veículo
+// -> O Sistema deve verificar se o veículo existe ou não e
+// mostrar a seguinte mensagem caso o veículo não exista:
+// "Veículo, não encontrado. O usuário deve voltar para o menu
+// inicial depois"
+// -> Se o veículo existir, o sistema deve remover o veículo
+
+function removerVeiculo() {
+    const identificadorVeiculo = Number(prompt("Digite o ID do veículo que deseja remover:"))
+    const veiculo = veiculos.find(veiculo => veiculo.id === identificadorVeiculo)
+
+    if (!veiculo) {
+        alert("Veículo não encontrado. O usuário deve voltar para o menu inicial depois.")
+    } else {
+        veiculos = veiculos.filter(veiculo => veiculo.id!== identificadorVeiculo)
+        alert("Veículo removido com sucesso!")
+    }
+}
+
+// 6 - Sair do sistema
+
+function sairSistema() {
+    alert("Obrigado por utilizar nossos serviços!")
+}
+
+
+</script>

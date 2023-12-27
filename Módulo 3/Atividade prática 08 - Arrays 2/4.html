@@ -1,0 +1,26 @@
+<!-- Desenvolva um algoritmo que declare uma lista de 10 números e
+solicite um número para o usuário e no final informe se o número
+que o usuário digitou está dentro da lista ou não. -->
+
+<script>
+
+const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+let numeroEscolhido = Number(prompt('Insira um número'))
+
+let encontrado = false
+
+for (const i of numeros) {
+
+    if (numeroEscolhido === i) {
+        encontrado = true
+        break;
+    }
+}
+if (encontrado) {
+    document.write('O número inserido está na lista.')
+} else {
+    document.write('O número inserido não está na lista.')
+}
+
+</script>

@@ -1,0 +1,23 @@
+<!-- Desenvolva um algoritmo que preenche um vetor com os 4
+primeiros números perfeitos. -->
+
+<script>
+
+const numerosPerfeitos = []
+
+for (let numero = 2; numerosPerfeitos.length < 4; numero++) {
+    let somaDivisores = 1
+    for (let i = 2; i <= numero / 2; i++) {
+        if (numero % i === 0) {
+            somaDivisores += i
+        }
+    }
+    if (somaDivisores === numero) {
+        numerosPerfeitos.push(numero)
+    }
+}
+
+for (const numeroPerfeito of numerosPerfeitos) {
+    console.log(numeroPerfeito)
+}
+</script>

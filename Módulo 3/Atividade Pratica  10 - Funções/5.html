@@ -1,0 +1,17 @@
+<!-- Crie uma função que recebe um valor inteiro e retorne verdadeiro se
+é um valor perfeito ou falso se não for. Um valor é dito perfeito
+quando ele é igual a soma dos seus divisores excetuando ele
+próprio. -->
+
+<script>
+function isPerfect(num) {
+    if (num <= 1) return false
+    let sum = 0
+    for (let i = 1; i <= num / 2; i++) {
+        if (num % i === 0) {
+            sum += i;
+        }
+    } return sum === num
+}
+console.log(isPerfect(28));
+</script>

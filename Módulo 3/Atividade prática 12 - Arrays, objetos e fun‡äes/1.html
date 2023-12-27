@@ -1,0 +1,82 @@
+<script>
+    const data = [
+{
+nome: 'Roger Medeiros',
+sexo: 'M',
+salario: 3250,
+},
+{
+nome: 'Carolina Silva',
+sexo: 'F',
+salario: 1200,
+},
+{
+nome: 'Cristina Avila',
+sexo: 'F',
+salario: 8100,
+},
+{
+nome: 'Gustavo Hoffman',
+sexo: 'M',
+salario: 5200.35,
+},
+{
+nome: 'Eva Trindade',
+sexo: 'F',
+salario: 2501,
+},
+{
+nome: 'Andre Mathias',
+sexo: 'M',
+salario: 1750,
+},
+{
+nome: 'Joice Castro da Silva',
+
+sexo: 'F',
+salario: 3350.25,
+},
+];
+
+// 1. Quantidade total de pessoas
+console.log(`Quantidade total de pessoas: ${data.length}`);
+
+// 2. Quantidade de pessoas do sexo Feminino
+const qtdFeminino = data.filter(pessoa => pessoa.sexo === 'F').length;
+console.log(`Quantidade de pessoas do sexo Feminino: ${qtdFeminino}`);
+
+// 3. Soma dos salários de todas as pessoas
+const somaSalarios = data.reduce((total, pessoa) => total + pessoa.salario, 0);
+console.log(`Soma do salário de todas as pessoas: ${somaSalarios}`);
+
+// 4. Média do salário de todas as pessoas
+const mediaSalarios = somaSalarios / data.length;
+console.log(`Média do salário de todas as pessoas: ${mediaSalarios}`);
+
+// 5. Soma dos salários das pessoas do sexo Masculino
+const somaSalariosMasculino = data
+  .filter(pessoa => pessoa.sexo === 'M')
+  .reduce((total, pessoa) => total + pessoa.salario, 0);
+console.log(`Soma do salário das pessoas do sexo Masculino: ${somaSalariosMasculino}`);
+
+// 6. Média dos salários das pessoas do sexo Masculino
+const pessoasMasculino = data.filter(pessoa => pessoa.sexo === 'M');
+const mediaSalariosMasculino = pessoasMasculino.reduce((total, pessoa) => total + pessoa.salario, 0) / pessoasMasculino.length;
+console.log(`Média do salário das pessoas do sexo Masculino: ${mediaSalariosMasculino}`);
+
+// 7. Verifica se existe algum salário superior a R$ 7.000
+const salarioSuperior7k = data.some(pessoa => pessoa.salario > 7000);
+console.log(`Existe algum salário superior a R$ 7.000: ${salarioSuperior7k}`);
+
+// 8. Posição da pessoa de nome 'Eva Trindade'
+const posicaoEvaTrindade = data.findIndex(pessoa => pessoa.nome === 'Eva Trindade');
+console.log(`Posição da pessoa de nome "Eva Trindade": ${posicaoEvaTrindade}`);
+
+// 9. Filtrar todas as pessoas com sobrenome "Silva"
+const pessoasSobrenomeSilva = data.filter(pessoa => pessoa.nome.toLowerCase().includes('silva'));
+console.log(`Pessoas com sobrenome "Silva": ${JSON.stringify(pessoasSobrenomeSilva)}`);
+
+// 10. Imprimir os nomes utilizando MAP
+const nomes = data.map(pessoa => pessoa.nome);
+console.log(`Nomes: ${nomes}`);
+</script>
